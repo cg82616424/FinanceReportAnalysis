@@ -70,7 +70,7 @@ class Xinalang():
 
     def scheduler(self):
 
-        with open("D:\python文件库\项目\Financal analysis\A股数据分析\stockCode.txt",encoding="utf8") as f:
+        with open("./stockCode.txt",encoding="utf8") as f:
             lines=f.readlines()
         c=-1
         for line in lines[3216:]:

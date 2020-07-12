@@ -3,7 +3,7 @@
 __author__ = "Gallen_qiu"
 import requests,json,time
 from bs4 import BeautifulSoup
-from multiprocessing import Queue
+from macQueue import Queue
 from concurrent.futures import ThreadPoolExecutor
 
 class Xinalang():
@@ -28,7 +28,7 @@ class Xinalang():
             for url in url_list:
                 headers={}
                 response=requests.get(url,headers=headers,timeout=5)
-                soup=BeautifulSoup(response.content.decode("gb2312"),"lxml")
+                soup=BeautifulSoup(response.content.decode("utf-8"),"lxml")
 
                 '''报表日期'''
                 trs = soup.select("tbody tr")
@@ -55,16 +55,16 @@ class Xinalang():
         except TimeoutError:
             print("超时")
             self.info.append(ninfo)
-        except:
-            print("其他错误")
+        except Exception as e :
+            print(e)
             print("其他错误")
             info = json.loads(ninfo)
             print(info["SECNAME"], info["year"])
 
     def scheduler(self):
-        year_list=[2014,2015,2016,2017,2018]
+        year_list=[2014,2015,2016,2017,2018,2019]
 
-        with open("D:\python文件库\项目\Financal analysis\A股数据分析\stockCode.txt",encoding="utf8") as f:
+        with open("./stockCode.txt",encoding="utf8") as f:
             lines=f.readlines()
 
         for line in lines:
@@ -72,7 +72,7 @@ class Xinalang():
             for year in year_list:
                 info["year"]=year
                 info_str=json.dumps(info)
-                # print(json.loads(info_str))
+                #print(json.loads(info_str))
 
                 self.queue.put(info_str)
 

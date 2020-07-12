@@ -5,7 +5,7 @@ __author__ = "Gallen_qiu"
 import requests,json,time,pymongo,time
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
-from multiprocessing import Queue
+from macQueue import Queue
 from concurrent.futures import ThreadPoolExecutor
 from pymongo.collection import Collection
 class Xinalang():
@@ -87,7 +87,7 @@ class Xinalang():
 
     def scheduler(self):
 
-        with open("D:\python文件库\项目\Financal analysis\A股数据分析\stockCode.txt",encoding="utf8") as f:
+        with open("./stockCode.txt",encoding="utf8") as f:
             lines=f.readlines()
         c=-1
         for line in lines[2234:]:

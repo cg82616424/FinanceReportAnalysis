@@ -4,7 +4,7 @@ __author__ = "Gallen_qiu"
 '''最近5年的财报'''
 import requests,json,time,pymongo
 from bs4 import BeautifulSoup
-from multiprocessing import Queue
+from macQueue import Queue
 from concurrent.futures import ThreadPoolExecutor
 from pymongo.collection import Collection
 class Xinalang():
@@ -30,7 +30,7 @@ class Xinalang():
             for url in url_list:
                 headers={}
                 response=requests.get(url,headers=headers,timeout=5)
-                soup=BeautifulSoup(response.content.decode("gb2312"),"lxml")
+                soup=BeautifulSoup(response.content.decode("utf-8"),"lxml")
 
                 '''报表日期'''
                 trs = soup.select("tbody tr")
@@ -68,9 +68,9 @@ class Xinalang():
             print(info["SECNAME"], info["year"])
 
     def scheduler(self):
-        year_list=[2014,2015,2016,2017,2018]
+        year_list=[2014,2015,2016,2017,2018,2019]
 
-        with open("D:\python文件库\项目\Financal analysis\A股数据分析\stockCode.txt",encoding="utf8") as f:
+        with open("./stockCode.txt",encoding="utf8") as f:
             lines=f.readlines()
 
         for line in lines:
